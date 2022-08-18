@@ -1,4 +1,5 @@
 {% extends "shop/base.html" %}
+         {% load custom_tags %}
 {% load static %}
 {% block title %}
     {% if category %}{{ category.name }}{% else %}Products{% endif %}
@@ -18,16 +19,25 @@
             {% endfor %}
         </ul>
     </div>
+
+<div class="card">
 <div id="main" class="product-list">
     <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
-    {% for product in products %}
+    {% for product in sproducts %}
         <div class="item">
-            <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+            <a href="{{ product.produrl }}">
+                <img src="{% if product.image %}{{ product.image }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
             </a>
-            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+            <h3> <b><a href="{{ product.produrl }}">{{ product.name }}</a></b> </h3>
+            <br>
             ${{ product.price }}
-        </div>
+
+        <p>likes: {{product.likes}} </p>
+        <p>watches: {{product.watches}} </p>
+        <p> rating: {{ product.rating }} </p>
+
+    </div>
     {% endfor %}
+</div>
 </div>
 {% endblock %}

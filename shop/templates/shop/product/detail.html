@@ -25,6 +25,7 @@
 {{ product.description|linebreaks }}
 </div>
 <br>
+<br>
         <div id="comments">
             {% for c in stats.0 %}
             {{ c.user_id.username }} : {{ c.message }}<br>
