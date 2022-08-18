@@ -6,9 +6,12 @@
 {% endblock %}
 
 {% block content %}
+         {% load custom_tags %}
 <div class="product-detail">
+    <div>
     <img src="{%if product.image%}{{product.image.url}}{%else%}{%static 'img/no_image.png'%}{% endif %}">
-<h1>{{ product.name }}</h1>
+    </div>
+        <h1>{{ product.name }}</h1>
 <h2>
     <a href="{{ product.category.get_absolute_url }}">{{product.category }}</a>
 </h2>
@@ -18,6 +21,48 @@
         {% csrf_token %}
         <input type="submit" value="Add to cart">
     </form>
+
 {{ product.description|linebreaks }}
 </div>
+<br>
+        <div id="comments">
+            {% for c in stats.0 %}
+            {{ c.user_id.username }} : {{ c.message }}<br>
+            {% endfor %}
+        </div>
+<br>
+
+<form method="post" action="{% url 'shop:comment' product.id product.slug %}">{% csrf_token %}
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea class="form-control" rows="2" id="comment" name="comment"></textarea>
+        </div>
+<br>
+        <div>
+        <button id="post_button" type="submit" class="btn btn-outline-primary">Post Comment</button>
+        <div>
+</form>
+
+<br>
+        <button type="button" class="btn btn-outline-primary watch_button" onclick="location.href='/watchlist/{{product.id}}'">
+ {% load custom_tags %}
+        {% if watchlist %}
+           U n w a t c h
+        {% else %}
+           W a t c h
+        {% endif %}
+
+        </button>
+
+<br>
+<br>
+        <button type="button" class="btn btn-outline-primary watch_button" onclick="location.href='/likelist/{{product.id}}'">
+ {% load custom_tags %}
+        {% if likelist%}
+           U n l i k e
+        {% else %}
+           L i k e
+        {% endif %}
+
+        </button>
 {% endblock %}

@@ -1,0 +1,27 @@
+{% extends "shop/base.html" %}
+{% block content %}
+{% if not next %}
+    {% url 'shop:product_list' as next %}
+{% endif %}
+<div class="jumbotron">
+  <center>
+    <h1>Welcome to  A   L   M   A  marketplace APP</h1>
+    <br>
+  <h2>Login page:</h2>
+  </center>
+  <br>
+  <h4>(You must be Superuser! Contact to Admin site)</h4>
+  <br>
+  {% if form.errors %}
+  <div class="alert alert-danger mt-5 text-center" role="alert">
+  <p>Your username and password didnt match!Please try again.</p>
+  </div>
+  {% endif %}
+  <form  action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit"  value="Login">
+    <input type="hidden" name="next" value="{{next}}">
+  </form>
+</div>
+{% endblock %}
